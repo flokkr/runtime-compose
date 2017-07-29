@@ -1,0 +1,29 @@
+version: "2"
+services:
+   namenode:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: namenode
+      ports:
+         - 50070:50070
+         - 9870:9870
+      env_file:
+        - ./compose-config
+      volumes:
+        - ./FsEditLog.class:/opt/plugins/020_btrace/btrace/FsEditLog.class
+        - ./RpcCalls.class:/opt/plugins/020_btrace/btrace/RpcCalls.class
+      environment:
+          BTRACE_SCRIPT: RpcCalls.class
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+   datanode:
+      image: flokkr/hadoop-hdfs-datanode:latest
+      links:
+         - namenode
+      env_file:
+        - ./compose-config
+      volumes:
+        - ./FsEditLog.class:/opt/plugins/020_btrace/btrace/FsEditLog.class
+        - ./RpcCalls.class:/opt/plugins/020_btrace/btrace/RpcCalls.class
+      environment:
+          BTRACE_SCRIPT: RpcCalls.class
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+
