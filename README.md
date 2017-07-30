@@ -14,10 +14,11 @@ To scale services
 docker-compose scale datanode=1
 ```
 
-## Parameters
+## Attributes
 
-| _Configuration management_               |                                          |
+| Topic                                    | Solution                                 |
 | ---------------------------------------- | ---------------------------------------- |
+| __Configuration management__             |                                          |
 | Source of config files:                  | docker-compose external environment variable file |
 | Configuration preprocessing:             | **envtoconf** (Convert environment variables to configuration formats |
 | Automatic restart on config change:      | Not supported, docker-compose up is required |
@@ -31,6 +32,7 @@ docker-compose scale datanode=1
 | Multi tenancy (multiple cluster)         | Partial (from multiple checkout directory, after port adjustment) |
 | __Network__                              |                                          |
 | Network between containers               | dedicated network per docker-compose file |
-| DNS                                      | Yes, handled by the docker network       |
+| DNS                                      | YES, handled by the docker network       |
+| Service discovery                        | NO (DNS based)                           |
 | Data locality                            | NO                                       |
 | Availability of the ports                | Published according to the docker-compose files |
