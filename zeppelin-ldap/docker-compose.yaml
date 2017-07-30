@@ -1,0 +1,28 @@
+version: "2"
+services:
+  ldap:
+    hostname: ldap
+    image: osixia/openldap:1.1.8
+  ldapweb:
+    image: osixia/phpldapadmin:0.7.0
+    links:
+      - ldap
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: ldap
+    ports:
+      - 6443:443
+  zeppelin:
+    image: flokkr/zeppelin
+    volumes:
+      - ./shiro.ini:/opt/zeppelin/conf/shiro.ini
+    links:
+      - ldap
+    ports:
+      - 8080:8080
+    environment:
+      LOG4J.PROPERTIES_log4j.rootLogger: INFO, stdout
+      LOG4J.PROPERTIES_log4j.logger.org.apache.zeppelin.realm: DEBUG
+      LOG4J.PROPERTIES_log4j.logger.org.apache.shiro: DEBUG
+      LOG4J.PROPERTIES_log4j.appender.stdout: org.apache.log4j.ConsoleAppender
+      LOG4J.PROPERTIES_log4j.appender.stdout.layout: org.apache.log4j.PatternLayout
+      LOG4J.PROPERTIES_log4j.appender.stdout.layout.ConversionPattern: "%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"
