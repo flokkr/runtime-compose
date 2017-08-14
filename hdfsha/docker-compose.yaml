@@ -1,0 +1,39 @@
+version: "3"
+services:
+   namenode1:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: namenode1
+      ports:
+         - 50070:50070
+         - 9870:9870
+      env_file:
+        - ./compose-config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+   namenode2:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: namenode2
+      env_file:
+        - ./compose-config
+   journal1:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: journal1
+      env_file:
+        - ./compose-config
+      command: ["/opt/hadoop/bin/hdfs","journalnode"]
+   journal2:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: journal2
+      env_file:
+        - ./compose-config
+      command: ["/opt/hadoop/bin/hdfs","journalnode"]
+   journal3:
+      image: flokkr/hadoop-hdfs-namenode:latest
+      hostname: journal3
+      env_file:
+        - ./compose-config
+      command: ["/opt/hadoop/bin/hdfs","journalnode"]
+   datanode:
+      image: flokkr/hadoop-hdfs-datanode:latest
+      env_file:
+        - ./compose-config
