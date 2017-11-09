@@ -1,5 +1,11 @@
 version: "3"
 services:
+   consul:
+     hostname: consul
+     image: consul
+     ports:
+       - 8500:8500
+     command: ["agent","-dev","-ui","-client","0.0.0.0"]
    namenode:
       image: flokkr/hadoop-hdfs-namenode:ozone
       hostname: namenode
@@ -15,7 +21,7 @@ services:
       ports:
         - 9864
       env_file:
-         - ./docker-config        
+         - ./docker-config
       command: ["/opt/hadoop/bin/hdfs","datanode"]
    ksm:
       hostname: ksm
@@ -33,3 +39,10 @@ services:
       env_file:
           - ./docker-config
       command: ["/opt/hadoop/bin/hdfs","scm"]
+   prometheus:
+     image: prom/prometheus
+     ports:
+       - 9090:9090
+     volumes:
+       - "./prometheus.yml:/tmp/prometheus.yml"
+     command: ["-storage.local.path=/tmp/data","-config.file=/tmp/prometheus.yml"]
