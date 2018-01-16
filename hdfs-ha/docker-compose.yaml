@@ -1,0 +1,48 @@
+version: "3"
+services:
+   namenode1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: namenode1
+      ports:
+         - 9870:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+      command: ["hdfs", "namenode"]
+      volumes:
+         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
+   namenode2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: namenode2
+      ports:
+         - 9871:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+      command: ["hdfs", "namenode"]
+      volumes:
+         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
+   journal1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal1
+      env_file:
+        - ./config
+      command: ["hdfs", "journalnode"]
+   journal2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal2
+      env_file:
+        - ./config
+      command: ["hdfs", "journalnode"]
+   journal3:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal3
+      env_file:
+        - ./config
+      command: ["hdfs", "journalnode"]
+   datanode:
+      image: flokkr/hadoop:${VERSION}
+      env_file:
+        - ./config

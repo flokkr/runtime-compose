@@ -4,8 +4,8 @@ HDFS-SITE.XML_dfs.journalnode.edits.dir=/data/journalnode
 
 HDFS-SITE.XML_dfs.nameservices=sh
 HDFS-SITE.XML_dfs.ha.namenodes.sh=nn1,nn2
-HDFS-SITE.XML_dfs.namenode.rpc-address.sh.nn1=namenode1:8020
-HDFS-SITE.XML_dfs.namenode.rpc-address.sh.nn2=namenode2:8020
+HDFS-SITE.XML_dfs.namenode.rpc-address.sh.nn1=namenode1:9820
+HDFS-SITE.XML_dfs.namenode.rpc-address.sh.nn2=namenode2:9820
 HDFS-SITE.XML_dfs.ha.fencing.methods=shell(/bin/true)
 HDFS-SITE.XML_dfs.client.failover.proxy.provider.sh=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
 HDFS-SITE.XML_dfs.ha.automatic-failover.enabled=false
