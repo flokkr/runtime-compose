@@ -1,0 +1,4 @@
+CORE-SITE.XML_fs.defaultFS=hdfs://nna
+HDFS-SITE.XML_dfs.nameservices=nameservice1,nameservice2
+HDFS-SITE.XML_dfs.namenode.rpc-address.nameservice1=nna:9820
+HDFS-SITE.XML_dfs.namenode.rpc-address.nameservice2=nnb:9820
