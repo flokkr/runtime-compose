@@ -1,0 +1,13 @@
+CORE-SITE.XML_fs.defaultFS=hdfs://sh
+HDFS-SITE.XML_dfs.journalnode.edits.dir=/data/journalnode
+
+HDFS-SITE.XML_dfs.nameservices=c1
+HDFS-SITE.XML_dfs.ha.namenodes.c1=nn1,nn2
+HDFS-SITE.XML_dfs.namenode.rpc-address.c1.nn1=c1namenode1:9000
+HDFS-SITE.XML_dfs.namenode.rpc-address.c1.nn2=c1namenode2:9000
+HDFS-SITE.XML_dfs.ha.fencing.methods=shell(/bin/true)
+HDFS-SITE.XML_dfs.client.failover.proxy.provider.sh=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
+HDFS-SITE.XML_dfs.ha.automatic-failover.enabled=false
+HDFS-SITE.XML_dfs.namenode.shared.edits.dir=qjournal://c1journal1:8485;c1journal2:8485;c1journal3:8485/c1
+
+LAUNCHER_UPDATE=true

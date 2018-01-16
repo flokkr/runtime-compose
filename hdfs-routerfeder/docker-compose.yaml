@@ -1,0 +1,23 @@
+version: "3"
+services:
+   router1:
+      image: flokkr/hadoop:${VERSION}
+      ports:
+         - 50071:50071
+         - 5005:5005
+      env_file:
+        - ./router1
+      command: ["hdfs","dfsrouter"]
+   router2:
+      image: flokkr/hadoop:${VERSION}
+      ports:
+         - 50072:50071
+      env_file:
+        - ./router2
+      command: ["hdfs","dfsrouter"]
+   zookeeper:
+      image: flokkr/zookeeper
+      hostname: zookeeper
+      environment:
+        ZOO.CFG_clientPort: 2181
+        ZOO.CFG_dataDir: /tmp/zookeeper

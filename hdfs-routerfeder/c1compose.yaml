@@ -1,0 +1,60 @@
+version: "3"
+services:
+   c1namenode1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c1namenode1
+      ports:
+         - 9870:9870
+      env_file:
+        - ./c1config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 20
+      command: ["hdfs", "namenode"]
+      volumes:
+         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
+   c1namenode2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c1namenode2
+      ports:
+         - 9871:9870
+      env_file:
+        - ./c1config
+      environment:
+          ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 40
+      command: ["hdfs", "namenode"]
+      volumes:
+         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
+   c1journal1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal1
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1journal2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal2
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1journal3:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal3
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1datanode:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./c1config
+      environment:
+         SLEEP_SECONDS: 50
+   c1activator:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "haadmin", "-transitionToActive", "nn1"]
+      env_file:
+        - ./c1config
+      environment:
+         SLEEP_SECONDS: 60
