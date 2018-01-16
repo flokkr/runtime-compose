@@ -1,0 +1,2 @@
+CORE-SITE.XML_fs.defaultFS=hdfs://nnx
+HDFS-SITE.XML_dfs.namenode.rpc-address.nnx:9820

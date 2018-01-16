@@ -1,0 +1,5 @@
+CORE-SITE.XML_fs.defaultFS=hdfs://nny
+HDFS-SITE.XML_dfs.namenode.rpc-address.nny:9820
+HDFS-SITE.XML_fs.viewfs.mounttable.default.link./x=hdfs://nny
+HDFS-SITE.XML_fs.viewfs.mounttable.default.link./y=hdfs://nnx
+
