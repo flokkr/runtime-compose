@@ -11,8 +11,6 @@ services:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
           SLEEP_SECONDS: 20
       command: ["hdfs", "namenode"]
-      volumes:
-         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
    c2namenode2:
       image: flokkr/hadoop:${VERSION}
       hostname: c2namenode2
@@ -24,8 +22,6 @@ services:
           ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
           SLEEP_SECONDS: 40
       command: ["hdfs", "namenode"]
-      volumes:
-         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
    c2journal1:
       image: flokkr/hadoop:${VERSION}
       hostname: journal1

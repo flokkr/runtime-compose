@@ -11,8 +11,6 @@ services:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hdfs/dfs/name"
           ENSURE_NAMENODE_CLUSTERID: "c1"
       command: ["hdfs","namenode"]
-      volumes:
-         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
    nnb:
       image: flokkr/hadoop:${VERSION}
       hostname: nnb
@@ -20,8 +18,6 @@ services:
          - 9871:9870
       env_file:
         - ./config
-      volumes:
-         - ./namenodeformat.sh:/opt/launcher/plugins/012_namenodeformat/namenodeformat.sh
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hdfs/dfs/name"
           ENSURE_NAMENODE_CLUSTERID: "c1"

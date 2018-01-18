@@ -1,56 +1,67 @@
 version: "3"
 services:
-   c1namenode1:
+   namenode1:
       image: flokkr/hadoop:${VERSION}
-      hostname: c1namenode1
+      hostname: namenode1
+      command: ["hdfs", "namenode"]
       ports:
          - 9870:9870
       env_file:
-        - ./c1config
+        - ./config
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
           SLEEP_SECONDS: 20
-      command: ["hdfs", "namenode"]
-   c1namenode2:
+   namenode2:
       image: flokkr/hadoop:${VERSION}
-      hostname: c1namenode2
+      hostname: namenode2
+      command: ["hdfs", "namenode"]
       ports:
          - 9871:9870
       env_file:
-        - ./c1config
+        - ./config
       environment:
           ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
           SLEEP_SECONDS: 40
+   namenode3:
+      image: flokkr/hadoop:${VERSION}
+      hostname: namenode2
       command: ["hdfs", "namenode"]
-   c1journal1:
+      ports:
+         - 9872:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 40
+   journal1:
       image: flokkr/hadoop:${VERSION}
       hostname: journal1
       env_file:
-        - ./c1config
+        - ./config
       command: ["hdfs", "journalnode"]
-   c1journal2:
+   journal2:
       image: flokkr/hadoop:${VERSION}
       hostname: journal2
       env_file:
-        - ./c1config
+        - ./config
       command: ["hdfs", "journalnode"]
-   c1journal3:
+   journal3:
       image: flokkr/hadoop:${VERSION}
       hostname: journal3
       env_file:
-        - ./c1config
+        - ./config
       command: ["hdfs", "journalnode"]
-   c1datanode:
+   datanode:
       image: flokkr/hadoop:${VERSION}
       command: ["hdfs", "datanode"]
       env_file:
-        - ./c1config
+        - ./config
       environment:
          SLEEP_SECONDS: 50
-   c1activator:
+   activator:
       image: flokkr/hadoop:${VERSION}
       command: ["hdfs", "haadmin", "-transitionToActive", "nn1"]
       env_file:
-        - ./c1config
+        - ./config
       environment:
          SLEEP_SECONDS: 60

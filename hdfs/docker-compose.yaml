@@ -1,26 +1,17 @@
 version: "2"
 services:
    namenode:
-      image: flokkr/hadoop-hdfs-namenode:latest
+      image: flokkr/hadoop:latest
       hostname: namenode
+      command: ["hdfs","namenode"]
       ports:
-         - 50070:50070
          - 9870:9870
       env_file:
-        - ./compose-config
+        - ./config
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-   secondarynamenode:
-      image: flokkr/hadoop-hdfs-namenode:latest
-      hostname: secondarynamenode
-      ports:
-         - 50090:50090
-      env_file:
-        - ./compose-config
-      command: ["/opt/hadoop/bin/hdfs","secondarynamenode"]
    datanode:
-      image: flokkr/hadoop-hdfs-datanode:latest
-      links:
-         - namenode
+      image: flokkr/hadoop:latest
+      command: ["hdfs", "datanode"]
       env_file:
-        - ./compose-config
+        - ./config
