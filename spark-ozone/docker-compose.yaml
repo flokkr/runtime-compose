@@ -1,0 +1,73 @@
+version: "2"
+services:
+   namenode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      hostname: namenode
+      command: ["hdfs", "namenode"]
+      ports:
+         - 9870:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+   datanode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./config
+   ksm:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs","ksm"]
+      hostname: ksm
+      ports:
+         - 9874:9874
+      env_file:
+          - ./config
+      environment:
+         ENSURE_KSM_INITIALIZED: /data/metadata/ksm/current/VERSION
+   scm:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs","scm"]        
+      hostname: scm
+      ports:
+         - 9876:9876
+      env_file:
+          - ./config
+      environment:
+          ENSURE_SCM_INITIALIZED: /data/metadata/scm/current/VERSION            
+   initdata:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["initdata.sh"]
+      env_file:
+        - ./config
+          #      environment:
+              #         SLEEP_SECONDS: 45
+      volumes:
+         - ./initdata.sh:/usr/bin/initdata.sh
+   resourcemanager:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["yarn", "resourcemanager"]
+      hostname: resourcemanager
+      ports:
+         - 8088:8088
+      env_file:
+        - ./config
+   nodemanager:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["yarn", "nodemanager"]
+      env_file:
+        - ./config
+   sparkhistory:
+      image: flokkr/spark-history
+      ports:
+        - 18080:18080
+      env_file:
+        - ./config
+      environment:
+         SLEEP_SECOND: 90
+   sparkrunner:
+      image: flokkr/spark:ozone
+      env_file:
+        - ./config
+      volumes:
+       - ./run.sh:/usr/bin/run-example
