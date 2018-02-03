@@ -1,35 +1,39 @@
 version: "3"
 services:
    namenode:
-      image: flokkr/hadoop-hdfs-namenode:ozone
+      image: flokkr/hadoop:ozone
       hostname: namenode
+      command: ["hdfs", "namenode"]
       ports:
          - 9870:9870
       environment:
           ENSURE_NAMENODE_DIR: /data/namenode
       env_file:
-         - ./docker-config
-      command: ["/opt/hadoop/bin/hdfs","namenode"]
+         - ./config
    datanode:
-      image: flokkr/hadoop-hdfs-datanode:ozone
+      image: flokkr/hadoop:ozone
+      command: ["hdfs", "datanode"]
       ports:
         - 9864
       env_file:
-         - ./docker-config        
-      command: ["/opt/hadoop/bin/hdfs","datanode"]
+         - ./config        
    ksm:
-      hostname: ksm
       image: flokkr/hadoop:ozone
+      hostname: ksm
+      command: ["hdfs","ksm"]
       ports:
          - 9874:9874
       env_file:
-          - ./docker-config
-      command: ["/opt/hadoop/bin/hdfs","ksm"]
+          - ./config
+      environment:
+         ENSURE_KSM_INITIALIZED: /data/metadata/ksm/current/VERSION
    scm:
       hostname: scm
       image: flokkr/hadoop:ozone
+      command: ["hdfs","scm"]
       ports:
          - 9876:9876
       env_file:
-          - ./docker-config
-      command: ["/opt/hadoop/bin/hdfs","scm"]
+          - ./config
+      environment:
+         ENSURE_SCM_INITIALIZED: /data/metadata/scm/current/VERSION
