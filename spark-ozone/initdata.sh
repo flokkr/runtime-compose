@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export HADOOP_CLASSPATH=/opt/hadoop/share/hadoop/tools/lib/hadoop-ozone-3.1.0-SNAPSHOT.jar 
+
 ls > /tmp/file
 hdfs dfs -mkdir /sparklog
 hdfs dfs -chmod 777 /sparklog

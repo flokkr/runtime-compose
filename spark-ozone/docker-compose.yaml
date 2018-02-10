@@ -6,6 +6,7 @@ services:
       command: ["hdfs", "namenode"]
       ports:
          - 9870:9870
+         - 9000:9000
       env_file:
         - ./config
       environment:
@@ -25,6 +26,7 @@ services:
           - ./config
       environment:
          ENSURE_KSM_INITIALIZED: /data/metadata/ksm/current/VERSION
+         SLEEP_SECONDS: 15
    scm:
       image: flokkr/hadoop:${HADOOP_VERSION}
       command: ["hdfs","scm"]        
@@ -40,8 +42,8 @@ services:
       command: ["initdata.sh"]
       env_file:
         - ./config
-          #      environment:
-              #         SLEEP_SECONDS: 45
+      environment:
+         SLEEP_SECONDS: 45
       volumes:
          - ./initdata.sh:/usr/bin/initdata.sh
    resourcemanager:
@@ -66,7 +68,9 @@ services:
       environment:
          SLEEP_SECOND: 90
    sparkrunner:
-      image: flokkr/spark:ozone
+      image: flokkr/spark:ozonefs
+      ports:
+        - 5000:5000
       env_file:
         - ./config
       volumes:
