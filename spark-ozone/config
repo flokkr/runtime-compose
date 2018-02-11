@@ -44,8 +44,10 @@ CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.root.default.acl_administer_queue
 CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.node-locality-delay=40
 CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings=
 CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings-override.enable=false
+
 SPARK-DEFAULTS.CONF!CFG_spark.eventLog.enabled=true
-SPARK-DEFAULTS.CONF!CFG_spark.eventLog.dir=hdfs://namenode:9000/sparklog
+#SPARK-DEFAULTS.CONF!CFG_spark.eventLog.dir=hdfs://namenode:9000/sparklog
+SPARK-DEFAULTS.CONF!CFG_spark.eventLog.dir=o3://bucket1.test/sparklog
 SPARK-DEFAULTS.CONF!CFG_spark.yarn.historyServer.address=sparkhistory:18080
 SPARK-DEFAULTS.CONF!CFG_spark.executor.instances=4
 SPARK-DEFAULTS.CONF!CFG_spark.executor.memory=8g

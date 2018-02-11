@@ -60,7 +60,8 @@ services:
       env_file:
         - ./config
    sparkhistory:
-      image: flokkr/spark-history
+      image: flokkr/spark:${SPARK_VERSION}
+      command: ["spark-class","org.apache.spark.deploy.history.HistoryServer"]
       ports:
         - 18080:18080
       env_file:
@@ -68,7 +69,7 @@ services:
       environment:
          SLEEP_SECOND: 90
    sparkrunner:
-      image: flokkr/spark:ozonefs
+      image: flokkr/spark:${SPARK_VERSION}
       ports:
         - 5000:5000
       env_file:
