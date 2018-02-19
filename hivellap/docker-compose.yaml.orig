@@ -1,0 +1,112 @@
+version: "3"
+services:
+  zookeeper1:
+    image: flokkr/zookeeper
+    hostname: zookeeper1
+    environment:
+      ZOO.CFG_clientPort: 2181
+      ZOO.CFG_dataDir: /tmp/zookeeper
+      ZOO.CFG_server.1: zookeeper1:2888:3888
+      ZOO.CFG_server.2: zookeeper2:2888:3888
+      ZOO.CFG_server.3: zookeeper3:2888:3888
+      ZOO.CFG_initLimit: 5
+      ZOO.CFG_syncLimit: 2
+    volumes:
+        - ./myid1:/tmp/zookeeper/myid
+  zookeeper2:
+    image: flokkr/zookeeper
+    hostname: zookeeper2
+    environment:
+      ZOO.CFG_clientPort: 2181
+      ZOO.CFG_dataDir: /tmp/zookeeper
+      ZOO.CFG_server.1: zookeeper1:2888:3888
+      ZOO.CFG_server.2: zookeeper2:2888:3888
+      ZOO.CFG_server.3: zookeeper3:2888:3888
+      ZOO.CFG_initLimit: 5
+      ZOO.CFG_syncLimit: 2
+    volumes:
+        - ./myid2:/tmp/zookeeper/myid
+  zookeeper3:
+    image: flokkr/zookeeper
+    hostname: zookeeper3
+    environment:
+      ZOO.CFG_clientPort: 2181
+      ZOO.CFG_dataDir: /tmp/zookeeper
+      ZOO.CFG_server.1: zookeeper1:2888:3888
+      ZOO.CFG_server.2: zookeeper2:2888:3888
+      ZOO.CFG_server.3: zookeeper3:2888:3888
+      ZOO.CFG_initLimit: 5
+      ZOO.CFG_syncLimit: 2
+    volumes:
+        - ./myid3:/tmp/zookeeper/myid
+  metastoredb:
+    image: prasanthj/metastore-db-postgres:3.0.0-SNAPSHOT
+    environment:
+      METASTORE_DB: metastore
+      METASTORE_DB_USER: hive
+      METASTORE_DB_PASSWORD: hive
+  metastore:
+     image: prasanthj/metastore:3.0.0-SNAPSHOT
+     hostname: metastore
+     domainname: hive
+     container_name: metastore
+     volumes:
+       - ./hadoop-conf:/hadoop-conf
+       - ./metastore/hive-conf:/hive-conf
+  query-coordinator:
+     image: prasanthj/query-coordinator:0.9.1
+     environment:
+       USER: hive
+       TEZ_CONF_DIR: /tez-conf
+       ZK_BROKER_URI: zookeeper1:2181
+     volumes:
+       - ./hadoop-conf:/hadoop-conf
+       - ./query-coordinator/tez-conf:/tez-conf
+  query-executor:
+     image: prasanthj/query-executor:3.0.0-SNAPSHOT
+     volumes:
+       - ./hadoop-conf:/hadoop-conf
+       - ./query-executor/hive-conf:/hive-conf
+  hiveserver2:
+     image: prasanthj/hiveserver2:3.0.0-SNAPSHOT
+     environment:
+       ZK_BROKER_URI: zookeeper1:2181
+     volumes:
+       - ./hadoop-conf:/hadoop-conf
+       - ./hiveserver2/hive-conf:/hive-conf
+  namenode:
+      image: flokkr/hadoop:ozone
+      hostname: namenode
+      command: ["hdfs", "namenode"]
+      ports:
+         - 9870:9870
+      environment:
+          ENSURE_NAMENODE_DIR: /data/namenode
+      env_file:
+         - ./config
+  datanode:
+      image: flokkr/hadoop:ozone
+      command: ["hdfs", "datanode"]
+      env_file:
+         - ./config
+  ksm:
+      image: flokkr/hadoop:ozone
+      hostname: ksm
+      command: ["hdfs","ksm"]
+      ports:
+         - 9874:9874
+      env_file:
+          - ./config
+      environment:
+         ENSURE_KSM_INITIALIZED: /data/metadata/ksm/current/VERSION
+
+  scm:
+      hostname: scm
+      image: flokkr/hadoop:ozone
+      command: ["hdfs","scm"]
+      ports:
+         - 9876:9876
+      env_file:
+          - ./config
+      environment:
+         ENSURE_SCM_INITIALIZED: /data/metadata/scm/current/VERSION
