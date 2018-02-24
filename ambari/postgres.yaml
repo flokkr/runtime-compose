@@ -1,0 +1,58 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+version: "3.5"
+services:
+  ambari-server:
+    depends_on:
+      - db
+    environment:
+      AMBARI.PROPERTIES!CFG_server.jdbc.database: postgres
+      AMBARI.PROPERTIES!CFG_server.jdbc.database_name: ${AMBARI_DB_NAME:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.driver: org.postgresql.Driver
+      AMBARI.PROPERTIES!CFG_server.jdbc.hostname: db
+      AMBARI.PROPERTIES!CFG_server.jdbc.port: 5432
+      AMBARI.PROPERTIES!CFG_server.jdbc.url: jdbc:postgresql://db:5432/${AMBARI_DB_NAME:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.user.name: ${AMBARI_DB_USER:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.user.passwd: /etc/ambari-server/conf/password.dat
+      AMBARI.PROPERTIES!CFG_server.persistence.type: remote
+    secrets:
+      - source: postgres-passwd
+        target: /etc/ambari-server/conf/password.dat
+        mode: 0400
+    volumes:
+      - postgres-scripts:/var/lib/ambari-server/resources/sql/create/Postgres
+
+  db:
+    image: postgres:9
+    hostname: db
+    environment:
+      POSTGRES_DB: ${AMBARI_DB_NAME:-ambari}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-passwd
+      POSTGRES_USER: ${AMBARI_DB_USER:-ambari}
+    expose:
+      - 5432
+    secrets:
+      - postgres-passwd
+    volumes:
+      - postgres-scripts:/docker-entrypoint-initdb.d
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+secrets:
+  postgres-passwd:
+    file: password.dat
+
+volumes:
+  postgres-scripts: {}
