@@ -17,6 +17,7 @@ services:
     hostname: ambari-server
     env_file:
       - ambari.properties.env
+      - log4j.properties.env
     environment:
       - AMBARI.PROPERTIES!CFG_server.persistence.type=in-memory # default persistence, can be overwritten in other compose files
     expose:
