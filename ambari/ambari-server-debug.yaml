@@ -13,20 +13,6 @@
 version: "3.5"
 services:
   ambari-server:
-    image: adoroszlai/ambari-server:${AMBARI_BUILD}-${AMBARI_FLAVOR}
-    hostname: ambari-server
-    env_file:
-      - ambari.properties.env
-      - log4j.properties.env
-    environment:
-      - AMBARI.PROPERTIES!CFG_server.persistence.type=in-memory # default persistence, can be overwritten in other compose files
-    expose:
-      - "8440"
-      - "8441"
     ports:
-      - 8080:8080
-    command: /etc/init.d/ambari-server start
-    deploy:
-      resources:
-        limits:
-          memory: 2048M
+      - 5005:5005
+    command: /etc/init.d/ambari-server start --debug
