@@ -16,6 +16,7 @@ services:
     image: adoroszlai/ambari-agent:${AMBARI_BUILD}-${AMBARI_FLAVOR}
     env_file:
       - ambari-agent.ini.env
+      - logging.conf.env
     environment:
       - AMBARI-AGENT.INI_server.hostname=ambari-server
     command: /etc/init.d/ambari-agent start
