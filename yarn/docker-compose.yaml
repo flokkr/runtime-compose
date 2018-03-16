@@ -27,7 +27,7 @@ services:
       env_file:
         - config
       volumes:
-        - ./test.sh:/opt/test.sh
+        - ./testdata:/opt/testdata
    nodemanager:
       image: flokkr/hadoop:${VERSION}
       command: ["yarn","nodemanager"]
