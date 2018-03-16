@@ -1,0 +1,65 @@
+
+{
+
+  "blueprint" : "blueprint-name",
+
+  "default_password" : "super-secret-password",
+
+  "configurations" : [
+
+    {
+
+      "configuration-type" : {
+
+        "property-name" : "property-value"
+
+      }
+
+    }
+
+
+  ],
+
+  "host_groups" :[
+
+    {
+
+      "name" : "host-group-name",
+
+      "configurations" : [
+
+        {
+
+          "configuration-type" : {
+
+            "property-name" : "property-value"
+
+          }
+
+        }
+
+      ],
+
+      "hosts" : [
+
+        {
+
+          "fqdn" : "host.domain.com"
+
+        },
+
+        {
+
+          "fqdn" : "host2.domain.com"
+
+        }
+
+
+      ]
+
+    }
+
+
+  ]
+
+}

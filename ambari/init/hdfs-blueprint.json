@@ -1,0 +1,48 @@
+{
+  "host_groups" : [
+    {
+      "components" : [
+        {
+          "name" : "SECONDARY_NAMENODE"
+        },
+        {
+          "name" : "HDFS_CLIENT"
+        },
+        {
+          "name" : "ZOOKEEPER_SERVER"
+        },
+        {
+          "name" : "DATANODE"
+        },
+        {
+          "name" : "NAMENODE"
+        },
+        {
+          "name" : "ZOOKEEPER_CLIENT"
+        }
+      ],
+      "configurations" : [ ],
+      "name" : "host_group_1",
+      "cardinality" : "1"
+    }
+  ],
+  "settings" : [
+    {
+      "recovery_settings" : [
+        {
+          "recovery_enabled" : "false"
+        }
+      ]
+    },
+    {
+      "service_settings" : [ ]
+    },
+    {
+      "component_settings" : [ ]
+    }
+  ],
+  "Blueprints" : {
+    "stack_name" : "HDP",
+    "stack_version" : "2.6"
+  }
+}

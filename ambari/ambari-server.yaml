@@ -26,6 +26,8 @@ services:
       - 5005:5005
       - 8080:8080
     command: /etc/init.d/ambari-server start
+    volumes: 
+       - ./init:/opt/init
     deploy:
       resources:
         limits:
