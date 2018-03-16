@@ -1,0 +1,15 @@
+{
+  "blueprint": "hdfs",
+  "default_password": "Welcome1",
+  "repository_version_id": 1,
+  "configurations": [
+    {
+    }
+  ],
+  "host_groups": [
+    {
+      "name": "host_group_1",
+      "host_count": 1
+    }
+  ]
+}
