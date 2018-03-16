@@ -1,0 +1,61 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+version: "3.5"
+services:
+  ambari-server:
+    depends_on:
+      - db
+    environment:
+      AMBARI.PROPERTIES!CFG_server.jdbc.database: mysql
+      AMBARI.PROPERTIES!CFG_server.jdbc.database_name: ${AMBARI_DB_NAME:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.driver: com.mysql.jdbc.Driver
+      AMBARI.PROPERTIES!CFG_server.jdbc.driver.path: /usr/share/java/mysql-jdbc-driver.jar
+      AMBARI.PROPERTIES!CFG_server.jdbc.hostname: db
+      AMBARI.PROPERTIES!CFG_server.jdbc.port: 3306
+      AMBARI.PROPERTIES!CFG_server.jdbc.url: jdbc:mysql://db:3306/${AMBARI_DB_NAME:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.user.name: ${AMBARI_DB_USER:-ambari}
+      AMBARI.PROPERTIES!CFG_server.jdbc.user.passwd: /etc/ambari-server/conf/password.dat
+      AMBARI.PROPERTIES!CFG_server.persistence.type: remote
+    secrets:
+      - source: mysql-passwd
+        target: /etc/ambari-server/conf/password.dat
+        mode: 0400
+    volumes:
+      - mysql-scripts:/var/lib/ambari-server/resources/sql/create/MySQL
+      - ${MYSQL_JDBC_DRIVER}:/usr/share/java/mysql-jdbc-driver.jar:ro
+
+  db:
+    image: mysql:5
+    hostname: db
+    environment:
+      MYSQL_DATABASE: ${AMBARI_DB_NAME:-ambari}
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql-passwd
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_USER: ${AMBARI_DB_USER:-ambari}
+    expose:
+      - 3306
+    secrets:
+      - mysql-passwd
+    volumes:
+      - mysql-scripts:/docker-entrypoint-initdb.d
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+secrets:
+  mysql-passwd:
+    file: password.dat
+
+volumes:
+  mysql-scripts: {}
