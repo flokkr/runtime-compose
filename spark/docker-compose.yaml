@@ -1,43 +1,52 @@
 version: "2"
 services:
    namenode:
-      image: flokkr/hadoop-hdfs-namenode:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: namenode
+      command: ["hdfs", "namenode"]
       ports:
-         - 50070:50070
-         - 9870:9870
+        - 9870:9870
       env_file:
-        - ./compose-config
+        - ./config
       environment:
-          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+        ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+      volumes:
+        - ./testdata:/opt/testdata
    datanode:
-      image: flokkr/hadoop-hdfs-datanode:latest
-      links:
-         - namenode
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs", "datanode"]
       env_file:
-        - ./compose-config
+        - ./config
    resourcemanager:
-      image: flokkr/hadoop-yarn-resourcemanager:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: resourcemanager
+      command: ["yarn", "resourcemanager"]
       ports:
          - 8088:8088
       env_file:
-        - ./compose-config
+        - ./config
       volumes:
-        - ./test.sh:/opt/test.sh
+        - ./testdata:/opt/testdata
    nodemanager:
-      image: flokkr/hadoop-yarn-nodemanager:latest
-      links:
-         - resourcemanager
-         - namenode
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["yarn","nodemanager"]
       env_file:
-        - ./compose-config
+        - config
    sparkhistory:
-      image: flokkr/spark-history
+      image: flokkr/spark:${SPARK_VERSION}
+      command: ["/opt/spark/bin/spark-class","org.apache.spark.deploy.history.HistoryServer"]
       ports:
         - 18080:18080
-      links:
-         - resourcemanager
-         - namenode
+      environment:
+         SLEEP_SECONDS: 30
       env_file:
-        - ./compose-config
+        - ./config
+   sparklogdirinit:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      volumes:
+         - ./init-hdfs.sh:/usr/bin/init-hdfs.sh
+      command: ["/usr/bin/init-hdfs.sh"]
+      environment:
+         SLEEP_SECONDS: 15
+      env_file:
+        - config
