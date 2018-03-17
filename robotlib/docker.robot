@@ -9,8 +9,8 @@ Daemon is running without error
 
 
 Startup Docker Compose
-    ${rc} =     Run And Return Rc           docker-compose -f ${COMPOSEFILE} down
-    ${rc} =     Run And Return Rc           docker-compose -f ${COMPOSEFILE} up -d
+    ${rc}       ${stdout} =     Run And Return Rc And Output            docker-compose -f ${COMPOSEFILE} down
+    ${rc}       ${stdout} =     Run And Return Rc And Output            docker-compose -f ${COMPOSEFILE} up -d
     Should Be Equal As Integers             ${rc}    0
 
 Does log contain
@@ -25,3 +25,7 @@ Execute on
 
 Docker compose down
     Run         docker-compose -f ${COMPOSEFILE} down
+
+Scale nodes up
+    [arguments]     ${servicename}  ${requirednodes}
+    Run             docker-compose -f ${COMPOSEFILE} scale ${servicename}=${requirednodes}
