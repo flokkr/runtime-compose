@@ -1,7 +1,7 @@
 version: "2"
 services:
    nna:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: nna
       ports:
          - 9870:9870
@@ -12,7 +12,7 @@ services:
           ENSURE_NAMENODE_CLUSTERID: "c1"
       command: ["hdfs","namenode"]
    nnb:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: nnb
       ports:
          - 9871:9870
@@ -23,7 +23,7 @@ services:
           ENSURE_NAMENODE_CLUSTERID: "c1"
       command: ["hdfs","namenode"]
    datanode:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       env_file:
         - ./config
       command: ["hdfs","datanode"]

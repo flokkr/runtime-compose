@@ -1,7 +1,7 @@
 version: "2"
 services:
    namenode:
-      image: flokkr/hadoop:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: namenode
       command: ["hdfs","namenode"]
       ports:
@@ -11,7 +11,7 @@ services:
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
    datanode:
-      image: flokkr/hadoop:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       command: ["hdfs", "datanode"]
       env_file:
         - ./config
