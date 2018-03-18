@@ -20,7 +20,7 @@ Daemons are running without error
 
 Running Wordcount spark job (local)
                         Execute on          namenode        hdfs dfs -copyFromLocal /opt/testdata/big.txt /
-    ${result} =         Execute on          sparkhistory    /opt/spark/bin/spark-submit --class org.apache.spark.examples.JavaWordCount /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar /big.txt
+    ${result} =         Execute on          sparkhistory    /opt/spark/runner.sh /opt/spark/bin/spark-submit --class org.apache.spark.examples.JavaWordCount /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar /big.txt
                         Should Contain      ${result}       inflammation: 65
                         Should Contain      ${result}       Successfully stopped SparkContext
 
@@ -29,7 +29,7 @@ Scale the cluster up
 
 Running Wordcount spark job (yarn)
                         Execute on          namenode        hdfs dfs -copyFromLocal /opt/testdata/big.txt /
-    ${result} =         Execute on          sparkhistory    /opt/spark/bin/spark-submit --deploy-mode cluster --master yarn --class org.apache.spark.examples.JavaWordCount /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar /big.txt
+    ${result} =         Execute on          sparkhistory    /opt/spark/runner.sh /opt/spark/bin/spark-submit --deploy-mode cluster --master yarn --class org.apache.spark.examples.JavaWordCount /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar /big.txt
                         Should Contain      ${result}       final status: SUCCEEDED
 
 *** Keywords ***
