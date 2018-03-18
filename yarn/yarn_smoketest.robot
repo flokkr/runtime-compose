@@ -17,6 +17,10 @@ Daemons are running without error
     Daemon is running without error           resourcemanager
     Daemon is running without error           nodemanager
 
+Check hadoop version
+    ${version}          Execute on      namenode                hadoop version
+    Log                 ${version}
+
 Calculate PI with mapreduce job
     ${examplejar} =     Execute on      resourcemanager         find /opt/hadoop -name "hadoop-mapreduce-examples*.jar" | grep -v sources | grep -v test
     ${result} =         Execute on      resourcemanager         yarn jar ${examplejar} pi 10 100
