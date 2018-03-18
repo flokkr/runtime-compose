@@ -1,7 +1,7 @@
 version: "2"
 services:
    nnx:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: nnx
       ports:
          - 9870:9870
@@ -11,12 +11,12 @@ services:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
       command: ["hdfs","namenode"]
    datanodex:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       env_file:
         - ./configx
       command: ["hdfs","datanode"]
    nny:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: nny
       ports:
          - 9871:9870
@@ -26,7 +26,7 @@ services:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
       command: ["hdfs","namenode"]
    datanodey:
-      image: flokkr/hadoop:${VERSION}
+      image: flokkr/hadoop:${HADOOP_VERSION}
       env_file:
         - ./configy
       command: ["hdfs","datanode"]
