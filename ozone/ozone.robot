@@ -4,6 +4,7 @@ Library             OperatingSystem
 Suite Setup         Startup Cluster
 Suite Teardown      Docker compose down
 Resource            ../robotlib/docker.robot
+Force Tags          ozone
 
 *** Variables ***
 ${PREFIX}               ozone
@@ -23,8 +24,8 @@ Check if datanode is connected to the scm
     Wait Until Keyword Succeeds     2min    5sec    Have healthy datanodes   1
 
 Scale it up to 5 datanodes
-    Scale datanodes up  5
-    Wait Until Keyword Succeeds     2min    5sec    Have healthy datanodes   5
+    Scale nodes up                  datanode    5
+    Wait Until Keyword Succeeds     2min        5sec    Have healthy datanodes   5
 
 Test rest interface
     ${result} =     Execute on      datanode     curl -i -X POST ${COMMON_RESTHEADER} "http://localhost:9880/volume1"
