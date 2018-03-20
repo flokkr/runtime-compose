@@ -2,7 +2,7 @@
 Documentation       Hive smokektest
 Library             OperatingSystem
 Suite Setup         Startup cluster
-#Suite Teardown      Docker compose down
+Suite Teardown      Docker compose down
 Resource            ../robotlib/docker.robot
 
 *** Variables ***
