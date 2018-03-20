@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-export HADOOP_CLASSPATH=/opt/hadoop/share/hadoop/tools/lib/hadoop-ozone-3.1.0-SNAPSHOT.jar 
+export HADOOP_TOOLS_OPTIONS=hadoop-ozone-filesystem
+export HADOOP_SHELL_PROFILES=ozone
 
 ls > /tmp/file
 
-hdfs oz -createVolume http://datanode:9864/test -user tester -quota 100TB -root
-hdfs oz -createBucket http://datanode:9864/test/bucket1
-hdfs oz -putKey http://datanode:9864/test/bucket1/key1 --file /tmp/file
-
-#hdfs dfs -mkdir hdfs://namenode:9000/sparklog
-#hdfs dfs -chmod 777 hdfs://namenode:9000/sparklog
-#hdfs dfs -chmod 777 hdfs://namenode:9000/
+oz oz -createVolume http://datanode:9880/test -user tester -quota 100TB -root
+oz oz -createBucket http://datanode:9880/test/bucket1
+oz oz -putKey http://datanode:9880/test/bucket1/key1 --file /tmp/file
 
 hdfs dfs -mkdir /sparklog
 hdfs dfs -chmod 777 /sparklog

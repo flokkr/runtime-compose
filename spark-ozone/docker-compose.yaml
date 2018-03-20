@@ -13,12 +13,12 @@ services:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
    datanode:
       image: flokkr/hadoop:${HADOOP_VERSION}
-      command: ["hdfs", "datanode"]
+      command: ["oz", "datanode"]
       env_file:
         - ./config
    ksm:
       image: flokkr/hadoop:${HADOOP_VERSION}
-      command: ["hdfs","ksm"]
+      command: ["oz","ksm"]
       hostname: ksm
       ports:
          - 9874:9874
@@ -29,7 +29,7 @@ services:
          SLEEP_SECONDS: 15
    scm:
       image: flokkr/hadoop:${HADOOP_VERSION}
-      command: ["hdfs","scm"]        
+      command: ["oz","scm"]        
       hostname: scm
       ports:
          - 9876:9876
@@ -68,11 +68,3 @@ services:
         - ./config
       environment:
          SLEEP_SECOND: 90
-   sparkrunner:
-      image: flokkr/spark:${SPARK_VERSION}
-      ports:
-        - 5000:5000
-      env_file:
-        - ./config
-      volumes:
-       - ./run.sh:/usr/bin/run-example
