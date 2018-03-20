@@ -30,7 +30,6 @@ CORE-SITE.XML_dfs.data.transfer.protection=authentication
 CORE-SITE.XML_hadoop.security.authentication=kerberos
 CORE-SITE.XML_hadoop.security.auth_to_local=RULE:[2:$1@$0](.*)s/.*/root/
 
-
 HDFS-SITE.XML_dfs.data.transfer.protection=authentication
 HDFS-SITE.XML_dfs.http.policy=HTTPS_ONLY
 HDFS-SITE.XML_dfs.block.access.token.enable=true
@@ -52,7 +51,7 @@ SSL-SERVER.XML_ssl.server.truststore.password=Welcome1
 SSL-CLIENT.XML_ssl.client.keystore.location=/opt/hadoop/etc/hadoop/hadoop.keystore
 SSL-CLIENT.XML_ssl.client.keystore.password=Welcome1
 SSL-CLIENT.XML_ssl.client.keystore.keypassword=Welcome1
-SSL-CLIENT.XML_ssl.client.truststore.location=/opt/hadoop/etc/truststore
+SSL-CLIENT.XML_ssl.client.truststore.location=/opt/hadoop/etc/hadoop/truststore
 SSL-CLIENT.XML_ssl.client.truststore.password=Welcome1
 
 YARN-SITE.XML_yarn.resourcemanager.principal=rm/resourcemanager@EXAMPLE.COM
@@ -68,7 +67,6 @@ YARN-SITE.XML_yarn.resourcemanager.webapp.spnego-principal=HTTP/_HOST@EXAMPLE.CO
 YARN-SITE.XML_yarn.nodemanager.webapp.spnego-keytab-file=/opt/hadoop/etc/hadoop/HTTP.keytab
 YARN-SITE.XML_yarn.nodemanager.webapp.spnego-principal=HTTP/_HOST@EXAMPLE.COM
 
-
-
 KERBEROS_KEYTABS=dn nn HTTP rm ts wp nm
 KERBEROS_KEYSTORES=hadoop
+LAUNCHER_UPDATE=true

@@ -5,41 +5,40 @@ services:
       ports:
         - 8081:8081
    namenode:
-      image: flokkr/hadoop-hdfs-namenode:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: namenode
+      command: ["hdfs", "namenode"]
       ports:
-         - 50070:50070
          - 9870:9870
       env_file:
-        - ./compose-config
+        - ./config
       environment:
-          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
    secondarynamenode:
-      image: flokkr/hadoop-hdfs-namenode:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: secondarynamenode
+      command: ["hdfs", "secondarynamenode"]
       ports:
          - 50090:50090
       env_file:
-        - ./compose-config
+        - ./config
       command: ["/opt/hadoop/bin/hdfs","secondarynamenode"]
    datanode:
-      image: flokkr/hadoop-hdfs-datanode:latest
-      links:
-         - namenode
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs", "datanode"]
       env_file:
-        - ./compose-config
+        - ./config
    resourcemanager:
-      image: flokkr/hadoop-yarn-resourcemanager:latest
+      image: flokkr/hadoop:latest
       hostname: resourcemanager
+      command: ["yarn", "resourcemanager"]
       ports:
          - 8088:8088
       env_file:
-        - ./compose-config
+        - ./config
 
    nodemanager:
-      image: flokkr/hadoop-yarn-nodemanager:latest
-      links:
-         - resourcemanager
-         - namenode
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["yarn", "nodemanager"]
       env_file:
-        - ./compose-config
+        - ./config
