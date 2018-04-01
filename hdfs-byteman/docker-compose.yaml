@@ -1,0 +1,18 @@
+version: "2"
+services:
+   namenode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      hostname: namenode
+      command: ["hdfs","namenode"]
+      ports:
+         - 9870:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+          BYTEMAN_SCRIPT_URL: https://gist.githubusercontent.com/elek/0589a91b4d55afb228279f6c4f04a525/raw/8bb4e03de7397c8a9d9bb74a5ec80028b42575c4/hadoop.btm
+   datanode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./config
