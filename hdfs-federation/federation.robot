@@ -17,7 +17,7 @@ Daemons are running without error
     Daemon is running without error           datanode
 
 Check if the two namespaces are separated
-                            Execute on              nna         hdfs dfs -mkdir hdfs:/nna/first
+                            Execute on              nna         hdfs dfs -mkdir hdfs://nna/first
                             Execute on              nnb         hdfs dfs -mkdir hdfs://nnb/second
     ${list} =               Execute on              nna         hdfs dfs -ls hdfs://nna/
                             Should Not Contain      ${list}     second
