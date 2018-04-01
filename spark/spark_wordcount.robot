@@ -28,7 +28,6 @@ Scale the cluster up
     Scale nodes up      nodemanager         4
 
 Running Wordcount spark job (yarn)
-                        Execute on          namenode        hdfs dfs -copyFromLocal /opt/testdata/big.txt /
     ${result} =         Execute on          sparkhistory    /opt/spark/runner.sh /opt/spark/bin/spark-submit --deploy-mode cluster --master yarn --class org.apache.spark.examples.JavaWordCount /opt/spark/examples/jars/spark-examples_2.11-2.3.0.jar /big.txt
                         Should Contain      ${result}       final status: SUCCEEDED
 
