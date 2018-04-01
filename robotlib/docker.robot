@@ -20,8 +20,9 @@ Does log contain
 
 Execute on
     [arguments]     ${componentname}    ${command}
-    ${return} =     Run                 docker-compose -f ${COMPOSEFILE} exec ${componentname} ${command}
-    [return]        ${return}
+    ${rc}           ${stdout} =         Run And Return Rc And Output     docker-compose -f ${COMPOSEFILE} exec ${componentname} ${command}
+                                        Should Be Equal As Integers      ${rc}  0
+    [return]        ${stdout}
 
 Docker compose down
     Run         docker-compose -f ${COMPOSEFILE} down
