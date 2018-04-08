@@ -12,15 +12,15 @@ services:
          - ./config
    datanode:
       image: flokkr/hadoop:ozone
-      command: ["oz", "datanode"]
+      command: ["ozone", "datanode"]
       ports:
         - 9864
       env_file:
-         - ./config        
+         - ./config
    ksm:
       image: flokkr/hadoop:ozone
       hostname: ksm
-      command: ["oz","ksm"]
+      command: ["ozone","ksm"]
       ports:
          - 9874:9874
       env_file:
@@ -30,7 +30,7 @@ services:
    scm:
       hostname: scm
       image: flokkr/hadoop:ozone
-      command: ["oz","scm"]
+      command: ["ozone","scm"]
       ports:
          - 9876:9876
       env_file:
