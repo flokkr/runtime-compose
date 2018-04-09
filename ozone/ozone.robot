@@ -38,7 +38,7 @@ Check webui static resources
 	                    Should contain		${result}		200
 
 Start freon testing
-    ${result} =		Execute on		                ksm		    oz freon -numOfVolumes 5 -numOfBuckets 5 -numOfKeys 5 -numOfThreads 10
+    ${result} =		Execute on		                ksm		 ozone freon -numOfVolumes 5 -numOfBuckets 5 -numOfKeys 5 -numOfThreads 10
 	                Wait Until Keyword Succeeds	    3min	    10sec		Should contain		${result}		Number of Keys added: 125
 	                Should Not Contain		        ${result}	ERROR
 
