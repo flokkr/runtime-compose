@@ -1,0 +1,9 @@
+CORE-SITE.XML_fs.default.name=hdfs://namenode:9000
+CORE-SITE.XML_fs.defaultFS=hdfs://namenode:9000
+HDFS-SITE.XML_dfs.namenode.rpc-address=namenode:9000
+HDFS-SITE.XML_dfs.replication=1
+HDFS-SITE.XML_dfs.permissions.superusergroup=flokkr
+HBASE-SITE.XML_hbase.rootdir=hdfs://namenode:9000/hbase
+HBASE-SITE.XML_hbase.cluster.distributed=true
+HBASE-SITE.XML_hbase.zookeeper.quorum=zookeeper
+HBASE-SITE.XML_hbase.regionserver.hostname.disable.master.reversedns=true

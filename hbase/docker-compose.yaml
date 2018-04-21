@@ -1,0 +1,64 @@
+version: "3"
+services:
+   namenode:
+      image: flokkr/hadoop:$HADOOP_VERSION
+      hostname: namenode
+      command: ["hdfs","namenode"]
+      ports:
+         - 9870:9870
+      env_file:
+        - ./compose-config
+      volumes:
+        - /home/elek/projects/flokkr/docker-hadoop/runner/012_hdfsinit/hdfsinit.sh:/opt/launcher/plugins/012_hdfsinit/hdfsinit.sh
+      environment:
+          NAMENODE_INIT: "hdfs dfs -chmod 777 hdfs://127.0.0.1:1111/"
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+   datanode:
+      image: flokkr/hadoop:$HADOOP_VERSION
+      command: ["hdfs","datanode"]
+      links:
+         - namenode
+      env_file:
+        - ./compose-config
+   zookeeper:
+      image: flokkr/zookeeper
+      hostname: zookeeper1
+      environment:
+        ZOO.CFG_clientPort: 2181
+        ZOO.CFG_dataDir: /tmp/zookeeper
+   hbasemaster:
+      domainname: hbase
+      image: flokkr/hbase:$HBASE_VERSION
+      command: ["hbase","master","start"]
+      hostname: hbasemaster
+      ports:
+        - 16010:16010
+      env_file:
+        - ./compose-config
+      environment:
+        WAITFOR: namenode:9000
+   hbaseregion1:
+      image: flokkr/hbase:$HBASE_VERSION
+      command: ["hbase","regionserver","start"]
+      domainname: hbase
+      hostname: hbaseregion1
+      env_file:
+        - ./compose-config
+   hbaseregion2:
+      image: flokkr/hbase:$HBASE_VERSION
+      command: ["hbase","regionserver","start"]
+      domainname: hbase
+      hostname: hbaseregion2
+      env_file:
+        - ./compose-config
+   hbaseregion3:
+      image: flokkr/hbase:$HBASE_VERSION
+      command: ["hbase","regionserver","start"]
+      domainname: hbase
+      hostname: hbaseregion3
+      env_file:
+        - ./compose-config
+networks:
+   default:
+      external:
+         name: hbase
