@@ -8,8 +8,6 @@ services:
          - 9870:9870
       env_file:
         - ./compose-config
-      volumes:
-        - /home/elek/projects/flokkr/docker-hadoop/runner/012_hdfsinit/hdfsinit.sh:/opt/launcher/plugins/012_hdfsinit/hdfsinit.sh
       environment:
           NAMENODE_INIT: "hdfs dfs -chmod 777 hdfs://127.0.0.1:1111/"
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
