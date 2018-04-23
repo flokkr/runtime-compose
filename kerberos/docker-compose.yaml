@@ -14,22 +14,13 @@ services:
         - ./config
       environment:
           ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
-   secondarynamenode:
-      image: flokkr/hadoop:${HADOOP_VERSION}
-      hostname: secondarynamenode
-      command: ["hdfs", "secondarynamenode"]
-      ports:
-         - 50090:50090
-      env_file:
-        - ./config
-      command: ["/opt/hadoop/bin/hdfs","secondarynamenode"]
    datanode:
       image: flokkr/hadoop:${HADOOP_VERSION}
       command: ["hdfs", "datanode"]
       env_file:
         - ./config
    resourcemanager:
-      image: flokkr/hadoop:latest
+      image: flokkr/hadoop:${HADOOP_VERSION}
       hostname: resourcemanager
       command: ["yarn", "resourcemanager"]
       ports:
