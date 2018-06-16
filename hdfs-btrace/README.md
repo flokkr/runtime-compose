@@ -1,1 +1,0 @@
-Example to instrument hadoop with btrace.
