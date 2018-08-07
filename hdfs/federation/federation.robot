@@ -3,10 +3,10 @@ Documentation       HDFS Federation test
 Library             OperatingSystem
 Suite Setup         Startup cluster
 Suite Teardown      Docker compose down
-Resource            ../robotlib/docker.robot
+Resource            ${CURDIR}/../../robotlib/docker.robot
 
 *** Variables ***
-${PREFIX}               hdfsfederation
+${PREFIX}               federation
 ${COMPOSEFILE}          ${CURDIR}/docker-compose.yaml
 
 *** Test Cases ***

@@ -1,0 +1,25 @@
+version: "2"
+services:
+   namenode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      hostname: namenode
+      command: ["hdfs","namenode"]
+      ports:
+         - 9870:9870
+      env_file:
+        - ./config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+   datanode:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./config
+   kms:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      hostname: kms
+      command: ["hadoop", "kms"]
+      env_file:
+        - ./config
+      ports:
+        - 9600:9600

@@ -3,10 +3,10 @@ Documentation       Smoketesting HDFS cluster
 Library             OperatingSystem
 Suite Setup         Startup cluster
 Suite Teardown      Docker compose down
-Resource            ../robotlib/docker.robot
+Resource            ${CURDIR}/../../robotlib/docker.robot
 
 *** Variables ***
-${PREFIX}               hdfs
+${PREFIX}               basic
 ${COMPOSEFILE}          ${CURDIR}/docker-compose.yaml
 
 *** Test Cases ***

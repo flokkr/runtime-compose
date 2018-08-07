@@ -1,0 +1,5 @@
+CORE-SITE.XML_fs.defaultFS=s3a://s3storage
+CORE-SITE.XML_fs.s3a.aws.credentials.provider=com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+CORE-SITE.XML_fs.trash.interval=60
+#HADOOP_CLASSPATH=/opt/hadoop/share/hadoop/tools/lib/hadoop-aws-3.1.0.jar:/opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar
+HADOOP_CLASSPATH=./share/hadoop/tools/lib/hadoop-aws-3.1.0.3.0.0.0-1634.jar:./share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar

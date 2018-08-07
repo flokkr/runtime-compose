@@ -1,0 +1,11 @@
+version: "3"
+services:
+   client:
+      image: flokkr/hadoop:${HADOOP_VERSION}
+      command: ["sleep","1d"]
+      env_file:
+        - ./config
+      environment:
+        AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+        AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+

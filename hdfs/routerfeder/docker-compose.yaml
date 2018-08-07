@@ -1,0 +1,131 @@
+version: "3"
+services:
+   router1:
+      image: flokkr/hadoop:${VERSION}
+      ports:
+         - 50071:50071
+         - 5005:5005
+      env_file:
+        - ./router1
+      command: ["hdfs","dfsrouter"]
+   router2:
+      image: flokkr/hadoop:${VERSION}
+      ports:
+         - 50072:50071
+      env_file:
+        - ./router2
+      command: ["hdfs","dfsrouter"]
+   zookeeper:
+      image: flokkr/zookeeper
+      hostname: zookeeper
+      environment:
+        ZOO.CFG_clientPort: 2181
+        ZOO.CFG_dataDir: /tmp/zookeeper
+   c1namenode1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c1namenode1
+      ports:
+         - 9870:9870
+      env_file:
+        - ./c1config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 20
+      command: ["hdfs", "namenode"]
+   c1namenode2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c1namenode2
+      ports:
+         - 9871:9870
+      env_file:
+        - ./c1config
+      environment:
+          ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 40
+      command: ["hdfs", "namenode"]
+   c1journal1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal1
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1journal2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal2
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1journal3:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal3
+      env_file:
+        - ./c1config
+      command: ["hdfs", "journalnode"]
+   c1datanode:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./c1config
+      environment:
+         SLEEP_SECONDS: 50
+   c1activator:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "haadmin", "-transitionToActive", "nn1"]
+      env_file:
+        - ./c1config
+      environment:
+         SLEEP_SECONDS: 60
+   c2namenode1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c2namenode1
+      ports:
+         - 9872:9870
+      env_file:
+        - ./c2config
+      environment:
+          ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 20
+      command: ["hdfs", "namenode"]
+   c2namenode2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: c2namenode2
+      ports:
+         - 9873:9870
+      env_file:
+        - ./c2config
+      environment:
+          ENSURE_STANDBY_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
+          SLEEP_SECONDS: 40
+      command: ["hdfs", "namenode"]
+   c2journal1:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal1
+      env_file:
+        - ./c2config
+      command: ["hdfs", "journalnode"]
+   c2journal2:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal2
+      env_file:
+        - ./c2config
+      command: ["hdfs", "journalnode"]
+   c2journal3:
+      image: flokkr/hadoop:${VERSION}
+      hostname: journal3
+      env_file:
+        - ./c2config
+      command: ["hdfs", "journalnode"]
+   c2datanode:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "datanode"]
+      env_file:
+        - ./c2config
+      environment:
+         SLEEP_SECONDS: 50
+   c2activator:
+      image: flokkr/hadoop:${VERSION}
+      command: ["hdfs", "haadmin", "-transitionToActive", "nn1"]
+      env_file:
+        - ./c2config
+      environment:
+         SLEEP_SECONDS: 60

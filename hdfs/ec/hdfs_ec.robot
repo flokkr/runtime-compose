@@ -3,10 +3,10 @@ Documentation       Using EC for one directory
 Library             OperatingSystem
 Suite Setup         Startup cluster
 Suite Teardown      Docker compose down
-Resource            ../robotlib/docker.robot
+Resource            ${CURDIR}/../../robotlib/docker.robot
 
 *** Variables ***
-${PREFIX}               hdfsec
+${PREFIX}               ec
 ${COMPOSEFILE}          ${CURDIR}/docker-compose.yaml
 
 *** Test Cases ***

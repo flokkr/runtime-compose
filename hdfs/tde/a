@@ -1,0 +1,2 @@
+hadoop key create key1 -provider jceks://file/opt/hadoop/etc/hadoop/kms.keystore
+hdfs crypto -createZone -keyName key1 -path /tde1
