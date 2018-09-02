@@ -1,0 +1,9 @@
+ZOO.CFG_clientPort=2181
+ZOO.CFG_dataDir=/data/zookeeper
+ZOO.CFG_server.1=zookeeper1:2888:3888
+ZOO.CFG_server.2=zookeeper2:2888:3888
+ZOO.CFG_server.3=zookeeper3:2888:3888
+ZOO.CFG_initLimit=5
+ZOO.CFG_syncLimit=2
+ZOOKEEPER_ID_FROM_HOST=/data/zookeeper
+

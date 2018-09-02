@@ -1,46 +1,17 @@
-version: "2"
+version: "3"
 services:
   zookeeper1:
-    image: flokkr/zookeeper
+    image: flokkr/zookeeper:${ZOOKEEPER_VERSION}
     hostname: zookeeper1
-    environment:
-      ZOO.CFG_clientPort: 2181
-      ZOO.CFG_dataDir: /tmp/zookeeper
-      ZOO.CFG_server.1: zookeeper1:2888:3888
-      ZOO.CFG_server.2: zookeeper2:2888:3888
-      ZOO.CFG_server.3: zookeeper3:2888:3888
-      ZOO.CFG_initLimit: 5
-      ZOO.CFG_syncLimit: 2
-    volumes:
-        - ./myid1:/tmp/zookeeper/myid
+    env_file:
+       - ./config
   zookeeper2:
-    image: flokkr/zookeeper
+    image: flokkr/zookeeper:${ZOOKEEPER_VERSION}
     hostname: zookeeper2
-    environment:
-      ZOO.CFG_clientPort: 2181
-      ZOO.CFG_dataDir: /tmp/zookeeper
-      ZOO.CFG_server.1: zookeeper1:2888:3888
-      ZOO.CFG_server.2: zookeeper2:2888:3888
-      ZOO.CFG_server.3: zookeeper3:2888:3888
-      ZOO.CFG_initLimit: 5
-      ZOO.CFG_syncLimit: 2
-    volumes:
-        - ./myid2:/tmp/zookeeper/myid
+    env_file:
+       - ./config
   zookeeper3:
-    image: flokkr/zookeeper
+    image: flokkr/zookeeper:${ZOOKEEPER_VERSION}
     hostname: zookeeper3
-    environment:
-      ZOO.CFG_clientPort: 2181
-      ZOO.CFG_dataDir: /tmp/zookeeper
-      ZOO.CFG_server.1: zookeeper1:2888:3888
-      ZOO.CFG_server.2: zookeeper2:2888:3888
-      ZOO.CFG_server.3: zookeeper3:2888:3888
-      ZOO.CFG_initLimit: 5
-      ZOO.CFG_syncLimit: 2
-    volumes:
-        - ./myid3:/tmp/zookeeper/myid
-
-      
-      
-      
-      
+    env_file:
+       - ./config
